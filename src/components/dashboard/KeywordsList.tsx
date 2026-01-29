@@ -22,13 +22,13 @@ export function KeywordsList({ keywords }: KeywordsListProps) {
     <div className="glass glass-border rounded-xl p-5 h-full">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-rajdhani font-bold text-lg text-foreground uppercase tracking-wider">
-          Top Keywords
+          Pakistan Trends
         </h3>
         <span className="font-fira text-xs text-muted-foreground">
-          Top 20
+          Regional Top 20
         </span>
       </div>
-      
+
       <ScrollArea className="h-[400px] pr-4">
         <div className="space-y-2">
           {keywords.map((keyword, index) => (
@@ -43,13 +43,13 @@ export function KeywordsList({ keywords }: KeywordsListProps) {
               {/* Rank */}
               <div className={cn(
                 "flex items-center justify-center w-7 h-7 rounded-lg font-orbitron text-sm font-bold",
-                index < 3 
-                  ? "bg-primary/20 text-primary" 
+                index < 3
+                  ? "bg-primary/20 text-primary"
                   : "bg-muted/30 text-muted-foreground"
               )}>
                 {index + 1}
               </div>
-              
+
               {/* Keyword Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
@@ -60,7 +60,7 @@ export function KeywordsList({ keywords }: KeywordsListProps) {
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   {keyword.platforms.map((platform) => (
-                    <span 
+                    <span
                       key={platform}
                       className="text-muted-foreground/60"
                       title={platform}
@@ -73,7 +73,7 @@ export function KeywordsList({ keywords }: KeywordsListProps) {
                   </span>
                 </div>
               </div>
-              
+
               {/* Score & Growth */}
               <div className="text-right shrink-0">
                 <div className="font-orbitron text-sm font-bold text-foreground">
@@ -91,12 +91,12 @@ export function KeywordsList({ keywords }: KeywordsListProps) {
                   {keyword.growth >= 0 ? '+' : ''}{keyword.growth}%
                 </div>
               </div>
-              
+
               {/* Sentiment Indicator */}
               <div className={cn(
                 "w-2 h-8 rounded-full",
                 keyword.sentiment > 0.2 ? "bg-success/60" :
-                keyword.sentiment < -0.2 ? "bg-destructive/60" : "bg-muted-foreground/40"
+                  keyword.sentiment < -0.2 ? "bg-destructive/60" : "bg-muted-foreground/40"
               )} />
             </div>
           ))}
