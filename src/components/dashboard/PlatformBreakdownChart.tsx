@@ -7,7 +7,6 @@ import {
   Tooltip, 
   ResponsiveContainer,
   Legend,
-  Cell
 } from 'recharts';
 import type { PlatformBreakdown } from '@/types/dashboard';
 
@@ -15,18 +14,28 @@ interface PlatformBreakdownChartProps {
   data: PlatformBreakdown[];
 }
 
-const PLATFORM_COLORS = {
-  twitter: 'hsl(185, 100%, 50%)',
-  reddit: 'hsl(20, 100%, 55%)',
-  youtube: 'hsl(0, 100%, 50%)',
-  news: 'hsl(265, 95%, 58%)',
-};
+const SERIES_COLORS = [
+  'hsl(185, 100%, 50%)',
+  'hsl(20, 100%, 55%)',
+  'hsl(0, 100%, 50%)',
+  'hsl(265, 95%, 58%)',
+  'hsl(155, 100%, 50%)',
+  'hsl(45, 100%, 50%)',
+];
 
 export function PlatformBreakdownChart({ data }: PlatformBreakdownChartProps) {
+  const seriesKeys = (data[0] ? Object.keys(data[0]) : []).filter((key) => key !== 'keyword');
+  const displayKeys = seriesKeys.length > 0 ? seriesKeys : ['USA', 'Pakistan', 'China', 'India'];
+  const legendPayload = displayKeys.map((key, index) => ({
+    value: key,
+    type: 'circle' as const,
+    color: SERIES_COLORS[index % SERIES_COLORS.length],
+  }));
+
   return (
     <div className="glass glass-border rounded-xl p-5 h-full">
       <h3 className="font-rajdhani font-bold text-lg text-foreground uppercase tracking-wider mb-6">
-        Platform Breakdown
+        Platform Origin Breakdown
       </h3>
       
       <div className="h-[350px]">
@@ -70,11 +79,17 @@ export function PlatformBreakdownChart({ data }: PlatformBreakdownChartProps) {
             <Legend 
               wrapperStyle={{ fontFamily: 'Rajdhani', fontSize: 12 }}
               iconType="circle"
+              payload={legendPayload as any}
             />
-            <Bar dataKey="twitter" name="Twitter" fill={PLATFORM_COLORS.twitter} radius={[0, 4, 4, 0]} />
-            <Bar dataKey="reddit" name="Reddit" fill={PLATFORM_COLORS.reddit} radius={[0, 4, 4, 0]} />
-            <Bar dataKey="youtube" name="YouTube" fill={PLATFORM_COLORS.youtube} radius={[0, 4, 4, 0]} />
-            <Bar dataKey="news" name="News" fill={PLATFORM_COLORS.news} radius={[0, 4, 4, 0]} />
+            {displayKeys.map((key, index) => (
+              <Bar
+                key={key}
+                dataKey={key}
+                name={key}
+                fill={SERIES_COLORS[index % SERIES_COLORS.length]}
+                radius={[0, 4, 4, 0]}
+              />
+            ))}
           </BarChart>
         </ResponsiveContainer>
       </div>

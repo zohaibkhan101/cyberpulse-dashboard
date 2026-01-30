@@ -34,10 +34,7 @@ export interface SentimentOverview {
 
 export interface PlatformBreakdown {
   keyword: string;
-  twitter: number;
-  reddit: number;
-  youtube: number;
-  news: number;
+  [key: string]: string | number;
 }
 
 export interface DashboardStats {

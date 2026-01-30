@@ -4,10 +4,11 @@ import { Header } from '@/components/dashboard/Header';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { TrendingTicker } from '@/components/dashboard/TrendingTicker';
 import { SentimentGauge } from '@/components/dashboard/SentimentGauge';
-import { TrendVelocityChart } from '@/components/dashboard/TrendVelocityChart';
+import { TweetsSentimentGauge } from '@/components/dashboard/TweetsSentimentGauge';
 import { KeywordsList } from '@/components/dashboard/KeywordsList';
 import { PlatformBreakdownChart } from '@/components/dashboard/PlatformBreakdownChart';
 import { NewsFeed } from '@/components/dashboard/NewsFeed';
+import { TopNegativeTweetsFeed } from '@/components/dashboard/TopNegativeTweetsFeed';
 import { FilterBar } from '@/components/dashboard/FilterBar';
 import { api } from '@/services/api';
 import type {
@@ -148,17 +149,13 @@ const Index = () => {
 
         {/* Trending Ticker + Sentiment */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             <TrendingTicker trends={keywords} />
           </div>
-          <div>
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
             <SentimentGauge sentiment={sentiment} />
+            <TweetsSentimentGauge sentiment={sentiment} />
           </div>
-        </div>
-
-        {/* Trend Velocity Chart */}
-        <div className="mb-6">
-          <TrendVelocityChart data={timeline} />
         </div>
 
         {/* Keywords + Platform Breakdown */}
@@ -168,6 +165,9 @@ const Index = () => {
         </div>
 
         {/* News Feed */}
+        <div className="mb-6">
+          <TopNegativeTweetsFeed />
+        </div>
         <NewsFeed news={news} />
 
         {/* Footer */}

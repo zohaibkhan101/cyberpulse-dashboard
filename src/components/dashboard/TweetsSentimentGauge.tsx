@@ -1,7 +1,7 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import type { SentimentOverview } from '@/types/dashboard';
 
-interface SentimentGaugeProps {
+interface TweetsSentimentGaugeProps {
   sentiment: SentimentOverview;
 }
 
@@ -11,7 +11,7 @@ const COLORS = {
   negative: 'hsl(345, 100%, 50%)',
 };
 
-export function SentimentGauge({ sentiment }: SentimentGaugeProps) {
+export function TweetsSentimentGauge({ sentiment }: TweetsSentimentGaugeProps) {
   const data = [
     { name: 'Positive', value: sentiment.positive, color: COLORS.positive },
     { name: 'Neutral', value: sentiment.neutral, color: COLORS.neutral },
@@ -25,14 +25,14 @@ export function SentimentGauge({ sentiment }: SentimentGaugeProps) {
   return (
     <div className="glass glass-border rounded-xl p-5 h-full">
       <h3 className="font-rajdhani font-bold text-sm text-muted-foreground uppercase tracking-wider mb-4">
-        News Sentiments Overview
+        Tweets Sentiments Overview
       </h3>
-      
+
       <div className="relative h-48">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <defs>
-              <filter id="glow">
+              <filter id="glow-tweets">
                 <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                 <feMerge>
                   <feMergeNode in="coloredBlur" />
@@ -49,15 +49,15 @@ export function SentimentGauge({ sentiment }: SentimentGaugeProps) {
               paddingAngle={3}
               dataKey="value"
               stroke="none"
-              filter="url(#glow)"
+              filter="url(#glow-tweets)"
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'hsl(230, 50%, 14%)', 
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'hsl(230, 50%, 14%)',
                 border: '1px solid hsl(185, 100%, 50%, 0.3)',
                 borderRadius: '8px',
                 fontFamily: 'Rajdhani',
@@ -67,8 +67,7 @@ export function SentimentGauge({ sentiment }: SentimentGaugeProps) {
             />
           </PieChart>
         </ResponsiveContainer>
-        
-        {/* Center Text */}
+
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="text-center">
             <span className={`font-orbitron text-xl font-bold ${sentimentColor}`}>
@@ -81,14 +80,10 @@ export function SentimentGauge({ sentiment }: SentimentGaugeProps) {
         </div>
       </div>
 
-      {/* Legend */}
       <div className="flex justify-center gap-4 mt-4">
         {data.map((item) => (
           <div key={item.name} className="flex items-center gap-2">
-            <div 
-              className="w-3 h-3 rounded-full" 
-              style={{ backgroundColor: item.color }}
-            />
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
             <span className="font-inter text-xs text-muted-foreground">
               {item.name} ({item.value}%)
             </span>

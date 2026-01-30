@@ -1,0 +1,24 @@
+import { Newspaper } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+
+export function TopNegativeTweetsFeed() {
+  return (
+    <div className="glass glass-border rounded-xl p-5">
+      <div className="flex items-center gap-3 mb-4">
+        <Newspaper className="h-5 w-5 text-primary" />
+        <h3 className="font-rajdhani font-bold text-lg text-foreground uppercase tracking-wider">
+          Top Negative Tweets (Flagged Accounts)
+        </h3>
+        <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent" />
+      </div>
+
+      <ScrollArea className="h-[320px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 pr-4">
+          <div className="col-span-full flex items-center justify-center h-full min-h-[320px]">
+            <span className="font-inter text-xs text-muted-foreground">No items available</span>
+          </div>
+        </div>
+      </ScrollArea>
+    </div>
+  );
+}
